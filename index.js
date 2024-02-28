@@ -26,6 +26,7 @@ mongoose
 // routes
 app.use("/ticket",require("./routes/tickets.routes"));
 app.use("/projectRequirement",require("./routes/project.routes"));
+app.use("/jobRequirement",require("./routes/jobs.routes"));
 
 
 // server instance
