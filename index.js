@@ -28,7 +28,7 @@ app.use("/ticket",require("./routes/tickets.routes"));
 app.use("/projectRequirement",require("./routes/project.routes"));
 app.use("/jobRequirement",require("./routes/jobs.routes"));
 app.use("/appliedJobs",require("./routes/appliedJobs.routes"));
-
+app.use("/employeeTicket",require("./routes/employeeTicket.routes"));
 
 // server instance
 app.listen(PORT, function () {
