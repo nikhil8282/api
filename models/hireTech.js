@@ -1,5 +1,7 @@
 // import mongoose from "mongoose";
 // import Validator from "validator";
+const Candidate = require("../models/candidate");
+
 const mongoose=require("mongoose");
 const validator=require("validator");
 
@@ -54,6 +56,14 @@ const HireTechSchema = new mongoose.Schema(
                 }
             }],
             default: [{ status: 'Requirement Submitted' }]
+
+        },
+        appliedCandidates:{
+            type:[{type:mongoose.Schema.Types.ObjectId,ref:'Candidate'}]
+        },
+        status:{
+            type:String,
+            enum:['Accept','Reject','Completed']
         }
     },
     { timestamps: true }
