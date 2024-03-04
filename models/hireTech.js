@@ -64,6 +64,14 @@ const HireTechSchema = new mongoose.Schema(
         status:{
             type:String,
             enum:['Accept','Reject','Completed']
+        },
+        shortListedCandidates:{
+            type:[{type:mongoose.Schema.Types.ObjectId,ref:'Candidate'}]
+
+        },
+        unShortListedCandidates:{
+            type:[{type:mongoose.Schema.Types.ObjectId,ref:'Candidate'}]
+
         }
     },
     { timestamps: true }

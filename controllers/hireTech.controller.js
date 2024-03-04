@@ -2,6 +2,61 @@ const candidate = require("../models/candidate");
 const HireTech = require("../models/hireTech");
 // const ResourceManagement = require("../models/resourceManagement");
 
+const addCandidateToShortlist = async(req,res)=>{
+
+  const { jobId, candidateId } = req.body;
+  if (!jobId || !candidateId) return res.status(400).json("Bad request");
+  try {
+    const result = await HireTech.updateOne(
+      { _id: jobId },
+      {
+        $addToSet: {
+          "shortListedCandidates": { "_id": candidateId },
+        },
+      }
+    );
+    return res.status(200).json(result);
+  } catch (err) {
+    return res.status(404).json(err.message);
+  }
+
+}
+const addCandidateToUnShortlist = async(req,res)=>{
+
+  const { jobId, candidateId } = req.body;
+  if (!jobId || !candidateId) return res.status(400).json("Bad request");
+  try {
+    const result = await HireTech.updateOne(
+      { _id: jobId },
+      {
+        $addToSet: {
+          "unShortListedCandidates": { "_id": candidateId },
+        },
+      }
+    );
+    return res.status(200).json(result);
+  } catch (err) {
+    return res.status(404).json(err.message);
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const getJobsBySkill = async (req, res) => {
   const { id: _id } = req.body;
   // console.log(`${weekStartDate}  ${weekEndDate}  ${taskDate}`);
@@ -57,10 +112,9 @@ const addCandidates = async (req, res) => {
   }
 };
 const getJobs = async (req, res) => {
-  const { id } = req.params;
 
   try {
-    let result = await HireTech.find({ _id: id });
+    let result = await HireTech.find();
     // console.log(result);
     return res.json(result);
   } catch (err) {
@@ -117,4 +171,6 @@ module.exports = {
   getJobs,
   addCandidates,
   updateStatus,
+  addCandidateToUnShortlist,
+  addCandidateToShortlist
 };
