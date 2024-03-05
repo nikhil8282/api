@@ -1,12 +1,12 @@
 const express = require("express");
-const { getJobsBySkill,updateTechStatus,setJobData, getJobs ,addCandidates,updateStatus,addCandidateToUnShortlist,addCandidateToShortlist} = require("../controllers/hireTech.controller");
+const { getJobsBySkill,updateTechStatus,setJobData, getJobs ,applyCandidate,updateStatus,updateCandidate,undoTechStatus} = require("../controllers/hireTech.controller");
 const router = express.Router();
 router.get("/jobs/", getJobsBySkill);
 router.get("/allJobs/", getJobs);
 router.post("/jobs/",setJobData);
-router.post("/addCandidates/",addCandidates);
-router.post("/addCandidateToShortlist/",addCandidateToShortlist);
-router.post("/addCandidateToUnShortlist/",addCandidateToUnShortlist);
+router.post("/apply/:_id",applyCandidate);
+router.post("/updateCandidate/",updateCandidate);
 router.put("/jobs/update/status/:id",updateStatus);
 router.put("/jobs/update/techStatus/:id",updateTechStatus);
+router.delete("/jobs/update/techStatus/:_id",undoTechStatus);
 module.exports = router;
