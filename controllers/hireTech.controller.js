@@ -124,7 +124,7 @@ const updateTechStatus = async (req, res) => {
   const { status, date } = req.body;
   try {
     if (!id || !status || !date) return res.status(400).json("Bad request");
-
+    
     let result = await HireTech.updateOne(
       { _id: id },
       {
@@ -145,7 +145,7 @@ const undoTechStatus= async(req,res)=>{
   const {statusId}=req.body;
   try {
     if (!_id || !statusId) return res.status(400).json("Bad request");
-
+    
     let result = await HireTech.updateOne(
       { _id},
       {
@@ -162,6 +162,27 @@ const undoTechStatus= async(req,res)=>{
 
 
 }
+const candidateApproval= async (req,res)=>{
+  const { _id } = req.params;
+  const { candidateId,status} = req.body;
+  console.log(_id);
+  try {
+    if (!_id || !candidateId || !status) return res.status(400).json("Bad request");
+    
+    let result = await HireTech.updateOne(
+      { _id},
+      {
+        $addToSet: {
+          candidateApproval: { candidateId:candidateId,status: status},
+        },
+      }
+    );
+    console.log(result);
+    return res.json(result);
+  } catch (err) {
+    return res.status(400).json(err.message);
+  } 
+}
 module.exports = {
   getJobsBySkill,
   updateTechStatus,
@@ -170,5 +191,6 @@ module.exports = {
   applyCandidate,
   updateStatus,
   updateCandidate,
-  undoTechStatus
+  undoTechStatus,
+  candidateApproval
 };
